@@ -1,0 +1,35 @@
+CREATE DATABASE IF NOT EXISTS react_node_app
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+USE react_node_app;
+
+
+
+CREATE TABLE pages (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    title VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) NOT NULL UNIQUE,
+
+    content LONGTEXT NOT NULL,
+
+    meta_title VARCHAR(255) NULL,
+    meta_description VARCHAR(500) NULL,
+    meta_keywords VARCHAR(500) NULL,
+
+    status ENUM('draft', 'published', 'archived') 
+        DEFAULT 'draft',
+
+    is_homepage TINYINT(1) DEFAULT 0,
+
+    created_by BIGINT UNSIGNED NULL,
+    updated_by BIGINT UNSIGNED NULL,
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    INDEX idx_status (status),
+    INDEX idx_slug (slug)
+);
